@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machineries</title>
+</head>
+<h1>Machineries</h1>
+<body>
+    <a href="{% url add_machinery}"></a>
+        {% for machinery in machineries }
+        <li>
+            {{ machinery.name }}
+            <a href="{% url 'edit_machinery' machinery.id %}">Edit</a>
+            <a href="{% url delete_machinery machinery.id %}">Delete</a>
+
+        </li>
+    </u>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'styles.css' %}">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Project Manager</h1>
+    <div class="card">
+        <div class="container">
+            <a href="{% url 'project_view' %}">Projects</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="container">
+            <a href="{% url 'machinery_view' %}">Machineries</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container">
+            <a href="{% url 'personel_view' %}">Personnel</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="container">
+            <a href="{% url 'material_view' %}">Materials</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="container">
+            <a href="{% url 'milestone_view' %}">Milestones</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="container">
+            <a href="{% url 'activity_view' %}">Activities</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities</title>
+</head>
+<body>
+    <h1>Activities</h1>
+    <a href="{% url 'add_activity' %}">Add activity</a>
+    <u>
+        {% for activity in activities %}
+        <li>
+            {{activity.name}}
+            <a href="{% url 'edit_activity' activity.id %}">Edit Activity</a>
+            <a href="{% url 'delete_activity' activity.id %}">Delete Activity</a>
+        </li>
+        {% endfor %}
+    </u>
+</body>
+</html>

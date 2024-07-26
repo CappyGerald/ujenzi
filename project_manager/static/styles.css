@@ -1,0 +1,23 @@
+div {
+    border: 10px;
+    background-color: beige;
+    display: contents;
+    padding: 10 px;
+
+}
+
+.card {
+     letter-spacing: normal;
+     display: inline;
+     color: white;
+     border: 0cqb;
+     scrollbar-width: 5px;
+}
+
+
+.container {
+    background-attachment: fixed;
+    border: 0cqh;
+    padding-left: 10px;
+    text-size-adjust: 5px;
+}

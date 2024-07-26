@@ -1,0 +1,15 @@
+
+{% block content %}
+{% block title %}{{project.name}} {% endblock %}
+<body>
+    <h1>Delete Project</h1>
+        <p>Are you sure you want to delete?</p>
+        <form method="post" action="{% 'delete' project.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Confirm</button>
+            <a href="{% url  'project_view' %}">Cancel</a>
+    </form>
+</body>
+{% endblock %}
+    
