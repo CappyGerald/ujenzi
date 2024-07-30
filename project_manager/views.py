@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Activity, Project, Personel, Machinery, Material, Milestone
 from .forms import ProjectForm, MachineryForm, MaterialForm,\
     PersonelForm, ActivityForm, MilestoneForm
@@ -20,7 +20,7 @@ def add_activity(request):
         form = ActivityForm()
     return render(request, 'project_manager/add_activity_form.html', {'form': form})
 def edit_activity(request, pk):
-    activity = get_list_or_404(Activity, pk=pk)
+    activity = get_object_or_404(Activity, pk=pk)
     if request.method == 'POST':
         form = ActivityForm(request.POST, instance=activity)
         if form.is_valid():
@@ -31,7 +31,7 @@ def edit_activity(request, pk):
     return render(request, 'edit_activity_form.html', {'form': form})
 
 def delete_activity(request, pk):
-    activity = get_list_or_404(Activity, pk=pk)
+    activity = get_object_or_404(Activity, pk=pk)
     if request.method == 'POST':
         activity.delete()
         redirect('activity_view')
@@ -42,6 +42,10 @@ def project_view(request):
     return render(request,
                   'project_manager/project_view.html',
                   {'projects': projects})
+
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    return render(request, 'project_detail.html', {'project': project})
 
 def add_project(request):
     if request.method == 'POST':
@@ -54,22 +58,22 @@ def add_project(request):
     return render(request, 'project_manager/add_project_form.html', {'form':form})
 
 def delete_project(request, pk):
-    project = get_list_or_404(Project, pk=pk)
+    project = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
         project.delete()
         redirect('project_view')
     return render(request, 'project_manager/delete_project_form.html', {'project': project})
 
 def edit_project(request, pk):
-    project = get_list_or_404(Project, pk=pk)
+    project = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project) 
         if form.is_valid():
             form.save()
-            redirect('project_view')
+            redirect('project_manager/project_detail_view', pk=project.pk)
     else:
         form = ProjectForm(instance=project)
-    return render(request, 'project_manager/edit_project_form.html', {'form': form})
+    return render(request, 'project_manager/edit_project_form.html', {'form': form, 'project': project})
 
 def machinery_view(request):
     machineries = Machinery.objects.all()
@@ -102,7 +106,7 @@ def edit_machinery(request, pk):
                   'project_manager/edit_machinery.html',
                   {'form':form})
 def delete_machinery(request, pk):
-    machinery = get_list_or_404(Machinery,
+    machinery = get_object_or_404(Machinery,
                                 pk=pk)
     if request.method == 'POST':
         machinery.delete()
@@ -124,18 +128,19 @@ def add_material(request):
     return render(request, 'project_manager/add_material.html', {'form': form})
 
 def edit_material(request, pk):
-    material = get_list_or_404(Material, pk=pk)
+    material = get_object_or_404(Material, pk=pk)
     if request.method == 'POST':
         form = MaterialForm(request.POST, instance=material)
         if form.is_valid():
             form.save()
             redirect('material_iew')
     else:
+        
         form = MachineryForm(instance=material)
     return render(request, 'project_manager/edit_material_form.html', {'form': form})
 
 def delete_material(request, pk):
-    material = get_list_or_404(Material, pk=pk)
+    material = get_object_or_404(Material, pk=pk)
     if request.method == 'POST':
         material.delete()
         redirect('material_view')
@@ -160,7 +165,7 @@ def add_personel(request):
     return render(request, 'project_manager/add_personel.html', {'form': form})
 
 def edit_personel(request, pk):
-    personel = get_list_or_404(Personel, pk=pk)
+    personel = get_object_or_404(Personel, pk=pk)
     if request.method == 'POST':
         form = PersonelForm(request.POST, instance=personel)
         if form.is_valid():
@@ -171,7 +176,7 @@ def edit_personel(request, pk):
     return render(request, 'project_manager/edit_personel_form.html', {'form': form})
 
 def delete_personel(request, pk):
-    personel = get_list_or_404(Personel, pk=pk)
+    personel = get_object_or_404(Personel, pk=pk)
     if request.method == 'POST':
         personel.delete()
         redirect('personel_view')
@@ -192,7 +197,7 @@ def add_milestone(request):
     return render(request, 'project_manager/add_milestone_form.html', {'form': form})
 
 def edit_milestone(request, pk):
-    milestone = get_list_or_404(Milestone, pk=pk)
+    milestone = get_object_or_404(Milestone, pk=pk)
     if request.method == 'POST':
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
@@ -203,7 +208,7 @@ def edit_milestone(request, pk):
     return render(request, 'project_manager/edit_milestone_form.html', {'form': form})
 
 def delete_milestone(request, pk):
-    milestone = get_list_or_404(Milestone, pk=pk)
+    milestone = get_object_or_404(Milestone, pk=pk)
     if request.method == 'POST':
         milestone.delete()
         redirect('milestone_view')
