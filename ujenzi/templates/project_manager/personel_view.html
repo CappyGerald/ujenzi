@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <title>Personell</title>
 </head>
 <body>
@@ -11,10 +13,7 @@
     <ul>
         {% for personel in personel %}
         <li>
-            {{personel.name}}
-            <a href="{% url 'edit_personel' personel.id %}">Edit Personel</a>
-            <a href="{% url 'delete_personel' personel.id %}">Delete Personel</a>
-
+           <a href="{% url 'details' project.id %}">{{personel.name}}</a> 
         </li>
         {% endfor %}
     </ul>

@@ -8,7 +8,7 @@
 <body>
     <h1>Activities</h1>
     <a href="{% url 'add_activity' %}">Add activity</a>
-    <u>
+    <ul>
         {% for activity in activities %}
         <li>
             {{activity.name}}
@@ -16,6 +16,6 @@
             <a href="{% url 'delete_activity' activity.id %}">Delete Activity</a>
         </li>
         {% endfor %}
-    </u>
+    </ul>
 </body>
 </html>
