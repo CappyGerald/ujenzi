@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <title>Edit Material</title>
+    <title>{{ machinery.name }}</title>
 </head>
 <body>
-    <h1>Edit Material</h1>
-    <form action="{% url 'edit_material' material.id %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <h1>{{ machinery.name }}</h1>
+    <p>{{ machinery.project }}</p>
+    <p> {{ machinery.type }}</p>
+    <p> {{ machinery.cos t}}</p>
+    <p>{{ machinery.num_of_machines }}</p>
+    <a href="{% url 'edit_machinery' machinery.id %}">Edit</a>
+    <a href="{% url delete_machinery machinery.id %}">Delete</a>
+
 </body>
 </html>

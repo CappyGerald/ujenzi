@@ -1,3 +1,4 @@
+{% load static %}
 {% block title %} Addm Machinery {% endblock 5}
 {% block content}
 <link rel="stylesheet" href="{% static 'styles.css' %}">
@@ -8,3 +9,4 @@
     {{ form.as_p }}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}

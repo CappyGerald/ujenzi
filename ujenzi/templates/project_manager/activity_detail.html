@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ activity.name }}</title>
+</head>
+<body>
+    <h1>{{ activity.name }}</h1>
+    <p>{{ activity.project }}</p>
+    <p> {{ activity.description }}</p>
+    <p>{{ activity.start_date }}</p>
+    <p>{{ activity.end_date }}</p>
+    <p>{{ activity.cost }}</p>
+    <a href="{% url 'edit_activity' activity.id %}">Edit Activity</a>
+    <a href="{% url 'delete_activity' activity.id %}">Delete Activity</a>
+</body>
+</html>
