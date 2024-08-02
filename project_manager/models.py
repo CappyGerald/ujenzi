@@ -68,5 +68,10 @@ class Material(models.Model):
         return self.name
     
 class Milestone(models.Model):
+    project = models.ForeignKey(Project,
+                                related_name='milestone', 
+                                on_delete=models.CASCADE,
+                                default=1)
     name = models.CharField(max_length=250)
-    distance_in_Km  = models.CharField(max_length=250)
+    distance  = models.CharField(max_length=250)
+    distance_units = models.CharField(max_length=10, default='KM')
