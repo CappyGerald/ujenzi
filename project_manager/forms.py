@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Project, Personel,Machinery, Material
+from .models import Activity, Project, Personel,Machinery, Material, Milestone
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -23,9 +23,11 @@ class PersonelForm(ModelForm):
 
 class ActivityForm(ModelForm):
     class Meta:
+        model = Activity
         fields = ['project', 'name', 'description', 'start_date', 'end_date', 'cost' ]
 
 class MilestoneForm(ModelForm):
     class Meta:
-        fields = ['name', 'distance_in_km']
+        model = Milestone
+        fields = ['project','name', 'distance', 'distance_units']
 
