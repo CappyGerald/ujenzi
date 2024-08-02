@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
     <ul>
         {% for personel in personel %}
         <li>
-           <a href="{% url 'details' project.id %}">{{personel.name}}</a> 
+           <a href="{% url 'personel_detail' personel.id %}">{{personel.name}}</a> 
         </li>
         {% endfor %}
     </ul>

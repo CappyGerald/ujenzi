@@ -9,11 +9,11 @@
     <title>{{ machinery.name }}</title>
 </head>
 <body>
-    <h1>{{ machinery.name }}</h1>
-    <p>{{ machinery.project }}</p>
-    <p> {{ machinery.type }}</p>
-    <p> {{ machinery.cos t}}</p>
-    <p>{{ machinery.num_of_machines }}</p>
+    <h1> name: {{ machinery.name }}</h1>
+    <p> project: {{ machinery.project }}</p>
+    <p> type: {{ machinery.type }}</p>
+    <p> cost: {{ machinery.cost}}</p>
+    <p> number: {{ machinery.num_of_machines }}</p>
     <a href="{% url 'edit_machinery' machinery.id %}">Edit</a>
     <a href="{% url delete_machinery machinery.id %}">Delete</a>
 

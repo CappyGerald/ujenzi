@@ -8,13 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <title>Machineries</title>
 </head>
-<h1>Machineries</h1>
 <body>
-    <a href="{% url add_machinery}"></a>
-        {% for machinery in machineries }
+    <h1>Machineries</h1>
+    <a href="{% url 'add_machinery' %}">Add Machine</a>
+    <ul>
+        {% for machinery in machineries %}
         <li>
             <a href="{% url 'machinery_detail' machinery.id %}">{{ machinery.name }}</a>  
         </li>
-    </u>
+        {% endfor %}
+    </ul>
 </body>
 </html>

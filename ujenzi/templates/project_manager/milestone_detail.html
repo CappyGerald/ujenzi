@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ milestone.name }}</title>
+</head>
+<body>
+    <1>{{ milestone.name }}</1>
+    <p> {{ milestone.distance_in_km }}</p>
+    <a href="{% url 'edit_milestone' milestone.id %}">Edit</a>
+    <a href="{% url 'delete_milestone' milestone.id %}"> delete</a>
+</body>
+</html>
