@@ -9,11 +9,11 @@
     <title>{{ material.name }}</title>
 </head>
 <body>
-    <h1>{{ material.name }}</h1>
-    <p>{{ material.project }}</p>
-    <p>{{ material.quantity }}</p>
-    <p> {{ material.quantity_units }}</p>
-    <p> {{ material.cost }}</p>
+    <h1> name: {{ material.name }}</h1>
+    <p> project: {{ material.project }}</p>
+    <p> Quantity: {{ material.quantity }}</p>
+    <p> Unit: {{ material.quantity_units }}</p>
+    <p> Cost: {{ material.cost }}</p>
     <a href="{% url 'edit_material' material.id %}"> Edit</a>
     <a href="{% url 'delete_material' material.id %}">delete</a>
 </body>
