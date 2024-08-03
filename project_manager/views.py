@@ -53,7 +53,7 @@ def delete_activity(request, pk):
     return render(request, 'delete_activity_form.html', {'activity': activity})
 
 def employee_view(request):
-    employees = Activity.objects.all()
+    employees = Employee.objects.all()
     paginator = Paginator(employees, 3)
     page_number = request.GET.get('page', 1)
     try:
