@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Activity, Project, Personel, Machinery, Material, Milestone
-from .forms import ProjectForm, MachineryForm, MaterialForm,\
+from .models import Activity, Employee,Project, Personel, Machinery, Material, Milestone
+from .forms import  EmployeeForm, ProjectForm, MachineryForm, MaterialForm,\
     PersonelForm, ActivityForm, MilestoneForm
 from django.core.paginator import Paginator, EmptyPage
 
@@ -51,6 +51,50 @@ def delete_activity(request, pk):
         activity.delete()
         return redirect('activity_view')
     return render(request, 'delete_activity_form.html', {'activity': activity})
+
+def employee_view(request):
+    employees = Activity.objects.all()
+    paginator = Paginator(employees, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        employee_list = paginator.page(page_number)
+    except EmptyPage:
+        employee_list = paginator.page(paginator.num_pages)
+   
+    return render(request, 'project_manager/employee_view.html', {'employees': employees})
+
+def employee_detail(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+    return render(request, 'project_manager/employee_detail.html', {'employee': employee})
+
+def add_employee(request):
+    if request.method == 'POST':
+        form = EmployeeForm()
+        if form.is_valid():
+            form.save()
+            return redirect('employee_view')
+    else:
+        form = EmployeeForm()
+    return render(request, 'project_manager/add_employee.html', {'form':form})
+
+def edit_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employee_detail')
+    else:
+        form = EmployeeForm(instance=employee)
+    return render(request, 'project_manager/edit_employee.html', {'form': form})
+
+def delete_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('employee_view')
+    return render(request, 'project_manager/delete_employee.html', {'employee': employee})
+    
 
 def project_view(request):
     projects = Project.objects.all()
