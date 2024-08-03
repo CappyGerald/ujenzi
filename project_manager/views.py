@@ -10,13 +10,14 @@ def home(request):
     return render(request, 'project_manager/home.html')
 
 def activity_view(request):
-    paginator = Paginator(activity_view, 3)
+    activities = Activity.objects.all()
+    paginator = Paginator(activities, 3)
     page_number = request.GET.get('page', 1)
     try:
         activities_list = paginator.page(page_number)
     except EmptyPage:
         activities_list = paginator.page(paginator.num_pages)
-    activities = Activity.objects.all()
+   
     return render(request, 'project_manager/activity_view.html', {'activities': activities})
 
 def activity_detail(request, pk):
@@ -53,7 +54,7 @@ def delete_activity(request, pk):
 
 def project_view(request):
     projects = Project.objects.all()
-    paginator = Paginator(activity_view, 3)
+    paginator = Paginator(projects, 3)
     page_number = request.GET.get('page', 1)
     try:
         project_list = paginator.page(page_number)
@@ -98,7 +99,7 @@ def edit_project(request, pk):
 
 def machinery_view(request):
     machineries = Machinery.objects.all()
-    paginator = Paginator(activity_view, 3)
+    paginator = Paginator(machineries, 3)
     page_number = request.GET.get('page', 1)
     try:
         machinery_list = paginator.page(page_number)
@@ -147,7 +148,7 @@ def delete_machinery(request, pk):
 
 def material_view(request):
     materials = Material.objects.all()
-    paginator = Paginator(activity_view, 3)
+    paginator = Paginator(materials, 3)
     page_number = request.GET.get('page', 1)
     try:
         material_list = paginator.page(page_number)
@@ -191,7 +192,7 @@ def delete_material(request, pk):
 
 def personel_view(request):
     personel = Personel.objects.all()
-    paginator = Paginator(activity_view, 3)
+    paginator = Paginator(personel, 3)
     page_number = request.GET.get('page', 1)
     try:
         personel_list = paginator.page(page_number)
@@ -238,7 +239,7 @@ def delete_personel(request, pk):
 
 def milestone_view(request):
     milestones =  Milestone.objects.all()
-    paginator = Paginator(activity_view, 3)
+    paginator = Paginator(milestones, 3)
     page_number = request.GET.get('page', 1)
     try:
         milestone_list = paginator.page(page_number)
