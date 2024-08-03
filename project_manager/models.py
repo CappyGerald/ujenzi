@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -15,13 +15,22 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Employee(models.Model):
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+    email = models.EmailField()
+    department = models.CharField(max_length=250)
+    position = models.CharField(max_length=250)
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 class Personel(models.Model):
     project = models.ForeignKey(Project,
                                 on_delete=models.CASCADE,
                                 related_name='personel')
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE, related_name='User')
+    employee = models.ForeignKey(Employee,
+                             on_delete=models.CASCADE, related_name='personel')
     role = models.CharField(max_length=250)
     join_date = models.DateField()
     end_date = models.DateField()
