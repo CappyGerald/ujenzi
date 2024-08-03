@@ -34,5 +34,9 @@ urlpatterns = [
     path('milestone/detail/<int:pk>', views.milestone_detail, name='milestone_detail'),
     path('milestone/edit/<int:pk>', views.edit_milestone, name='edit_milestone'),
     path('milestone/delete/<int:pk>', views.delete_material, name='delete_milestone'),
+    path('employee/', views.employee_view, name='employee_view'),
+    path('employee/add/', views.add_employee, name='add_employee'),
+    path('employee/edit/<int:pk>', views.edit_employee, name='edit_employee'),
+    path('employee/delete/<int:pk>', views.delete_employee, name='delete_employee'),
     
     ]
