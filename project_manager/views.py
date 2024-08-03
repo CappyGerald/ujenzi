@@ -2,12 +2,20 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Activity, Project, Personel, Machinery, Material, Milestone
 from .forms import ProjectForm, MachineryForm, MaterialForm,\
     PersonelForm, ActivityForm, MilestoneForm
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
+
 def home(request):
     return render(request, 'project_manager/home.html')
 
 def activity_view(request):
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        activities_list = paginator.page(page_number)
+    except EmptyPage:
+        activities_list = paginator.page(paginator.num_pages)
     activities = Activity.objects.all()
     return render(request, 'project_manager/activity_view.html', {'activities': activities})
 
@@ -45,6 +53,12 @@ def delete_activity(request, pk):
 
 def project_view(request):
     projects = Project.objects.all()
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        project_list = paginator.page(page_number)
+    except EmptyPage:
+        project_list = paginator.page(paginator.num_pages)
     return render(request,
                   'project_manager/project_view.html',
                   {'projects': projects})
@@ -84,6 +98,12 @@ def edit_project(request, pk):
 
 def machinery_view(request):
     machineries = Machinery.objects.all()
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        machinery_list = paginator.page(page_number)
+    except EmptyPage:
+        machinery_list = paginator.page(paginator.num_pages)
     return render(request,
                   'project_manager/machinery_form.html',
                   {'machineries': machineries})
@@ -127,6 +147,12 @@ def delete_machinery(request, pk):
 
 def material_view(request):
     materials = Material.objects.all()
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        material_list = paginator.page(page_number)
+    except EmptyPage:
+        material_list = paginator.page(paginator.num_pages)
     return render (request, 'project_manager/material_view.html', {'materials': materials})
 
 def material_detail(request, pk):
@@ -165,6 +191,12 @@ def delete_material(request, pk):
 
 def personel_view(request):
     personel = Personel.objects.all()
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        personel_list = paginator.page(page_number)
+    except EmptyPage:
+        personel_list = paginator.page(paginator.num_pages)
     return render(request, 'project_manager/personel_view.html', {'personel': personel})
 
 def personel_detail(request, pk):
@@ -206,6 +238,12 @@ def delete_personel(request, pk):
 
 def milestone_view(request):
     milestones =  Milestone.objects.all()
+    paginator = Paginator(activity_view, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        milestone_list = paginator.page(page_number)
+    except EmptyPage:
+        milestone_list = paginator.page(paginator.num_pages)
     return render(request, 'project_manager/milestone_view.html', {'milestones':milestones})
 
 def milestone_detail(request, pk):
