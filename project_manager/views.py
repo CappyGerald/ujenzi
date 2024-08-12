@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Activity, Employee,Project, Personel, Machinery, Material, Milestone
+from .models import Activity, Employee,Project, Personnel, Machinery, Material, Milestone
 from .forms import  EmployeeForm, ProjectForm, MachineryForm, MaterialForm,\
-    PersonelForm, ActivityForm, MilestoneForm
+    PersonnelForm, ActivityForm, MilestoneForm
 from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
@@ -224,7 +224,7 @@ def edit_material(request, pk):
             return redirect('material_detail', pk=material.pk)
     else:
         
-        form = MachineryForm(instance=material)
+        form = MaterialForm(instance=material)
     return render(request, 'project_manager/edit_material_form.html', {'form': form})
 
 def delete_material(request, pk):
@@ -234,52 +234,52 @@ def delete_material(request, pk):
         return redirect('material_view')
     return render(request, 'project_manager/delete_material.html', {'material': material})
 
-def personel_view(request):
-    personel = Personel.objects.all()
-    paginator = Paginator(personel, 3)
+def personnel_view(request):
+    personnel = Personnel.objects.all()
+    paginator = Paginator(personnel, 3)
     page_number = request.GET.get('page', 1)
     try:
-        personel_list = paginator.page(page_number)
+        personnel_list = paginator.page(page_number)
     except EmptyPage:
-        personel_list = paginator.page(paginator.num_pages)
-    return render(request, 'project_manager/personel_view.html', {'personel': personel})
+        personnel_list = paginator.page(paginator.num_pages)
+    return render(request, 'project_manager/personnel_view.html', {'personnel': personnel})
 
-def personel_detail(request, pk):
-    personel = get_object_or_404(Personel, pk=pk)
-    return render(request, 'project_manager/persone_detail.html', {'personel': personel})
+def personnel_detail(request, pk):
+    personnel = get_object_or_404(Personnel, pk=pk)
+    return render(request, 'project_manager/personnel_detail.html', {'personel': personnel})
 
-def add_personel(request):
+def add_personnel(request):
     if request.method == 'POST':
-        form = PersonelForm(request.POST)
+        form = PersonnelForm(request.POST)
         if form.is_valid():
             print('form is valid')
             form.save()
-            return redirect('personel_view')
+            return redirect('personnel_view')
         else:
             print('form is invalid!')
             print(form.errors)
     else:
-        form = PersonelForm()
-    return render(request, 'project_manager/add_personel.html', {'form': form})
+        form = PersonnelForm()
+    return render(request, 'project_manager/add_personnel.html', {'form': form})
 
-def edit_personel(request, pk):
-    personel = get_object_or_404(Personel, pk=pk)
+def edit_personnel(request, pk):
+    personnel = get_object_or_404(Personnel, pk=pk)
     if request.method == 'POST':
-        form = PersonelForm(request.POST, instance=personel)
+        form = PersonnelForm(request.POST, instance=personnel)
         if form.is_valid():
             form.save()
-            return redirect('personel_detail', pk=personel.pk)
+            return redirect('personnel_detail', pk=personnel.pk)
     else:
-        form = PersonelForm(instance=personel)
-    return render(request, 'project_manager/edit_personel_form.html', {'form': form})
+        form = PersonnelForm(instance=personnel)
+    return render(request, 'project_manager/edit_personnel_form.html', {'form': form})
 
 
-def delete_personel(request, pk):
-    personel = get_object_or_404(Personel, pk=pk)
+def delete_personnel(request, pk):
+    personnel = get_object_or_404(Personnel, pk=pk)
     if request.method == 'POST':
-        personel.delete()
-        return redirect('personel_view')
-    return render(request, 'project_manager/delete_personel_form.html', {'personel': personel})
+        personnel.delete()
+        return redirect('personnel_view')
+    return render(request, 'project_manager/delete_personnel_form.html', {'personel': personnel})
 
 def milestone_view(request):
     milestones =  Milestone.objects.all()
@@ -311,7 +311,7 @@ def edit_milestone(request, pk):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             form.save()
-            return redirect('milestone_detai', pk=milestone.pk)
+            return redirect('milestone_detail', pk=milestone.pk)
     else:
         form = MilestoneForm(instance=milestone)
     return render(request, 'project_manager/edit_milestone_form.html', {'form': form})
