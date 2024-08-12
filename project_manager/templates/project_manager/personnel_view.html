@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Personnel</title>
+</head>
+<body>
+    <h1>Personel</h1>
+    <a href="{% url 'add_personnel' %}">Add Personnel</a>
+    <ul>
+        {% for personel in personel %}
+        <li>
+           <a href="{% url 'personnel_detail' personnel.id %}">{{ personnel.name }}</a> 
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

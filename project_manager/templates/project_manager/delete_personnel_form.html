@@ -1,0 +1,21 @@
+<!-- project_manager/templates/project_manager/delete_personel_form.html -->
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Delete Personnel</title>
+</head>
+<body>
+    <h1>Delete Personnel</h1>
+    <p>Are you sure you want to delete?</p>
+    <form action="{% url 'delete_personnel' personnel.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+        <a href="{% url 'personnel_view' %}">Cancel</a>
+    </form>
+</body>
+</html>
