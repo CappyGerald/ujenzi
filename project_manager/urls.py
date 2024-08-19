@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
 
-
+app_name = 'project_manager'
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.index, name='index'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('projects/', views.project_view, name='project_view'),
     path('projects/add/', views.add_project, name='add_project'),
     path('projects/delete/<int:pk>', views.delete_project, name='delete_project'),
