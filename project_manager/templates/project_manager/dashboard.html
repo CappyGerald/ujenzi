@@ -1,0 +1,20 @@
+{% extends 'project_manager/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome to BuildLink</h2>
+    <p>Your ultimate solution for project management in construction.</p>
+
+    <nav>
+        <center>
+            <a href="{% url 'project_manager:project_view' %}">Projects</a>
+            <a href="{% url 'project_manager:machinery_view' %}">Machines & Equipment</a>
+            <a href="{% url 'project_manager:personnel_view' %}">Personnel</a>
+            <a href="{% url 'project_manager:material_view' %}">Materials</a>
+            <a href="{% url 'project_manager:milestone_view' %}">Milestones</a>
+            <a href="{% url 'project_manager:activity_view' %}">Activities</a>
+            <a href="{% url 'register:logout' %}">Logout</a>
+        </center>
+    </nav>
+{% endblock %}
