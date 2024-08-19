@@ -7,6 +7,7 @@ class Project(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
     budget = models.DecimalField(max_digits=10, decimal_places=2)
+    budget_unit = models.CharField(max_length=10, default='$')
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     expected_revenue = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -25,6 +26,7 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
 class Personnel(models.Model):
     project = models.ForeignKey(Project,
                                 on_delete=models.CASCADE,
@@ -45,8 +47,9 @@ class Activity(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
     start_date = models.DateField()
-    end_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost_unit = models.CharField(max_length=10, default='$')
 
     def __str__(self):
         return self.name
@@ -59,6 +62,7 @@ class Machinery(models.Model):
     machine_type = models.CharField(max_length=250)
     num_of_machines = models.IntegerField()
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost_unit = models.CharField(max_length=10, default='$')
 
     def __str__(self):
         return self.name
@@ -72,6 +76,7 @@ class Material(models.Model):
     quantity = models.IntegerField()
     quantity_units = models.CharField(max_length=10, default='KG')
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost_unit = models.CharField(max_length=10, default='$')
 
     def __str__(self):
         return self.name
