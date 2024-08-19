@@ -1,0 +1,8 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}{{ milestone.name }}{% endblock%}
+{% block content %}
+    <h1>{{ milestone.name }}</h1>
+    <p> {{ milestone.distance_in_km }}</p>
+    <a href="{% url 'project_manager:edit_milestone' milestone.id %}">Edit</a>
+    <a href="{% url 'project_manager:delete_milestone' milestone.id %}"> delete</a>
+{% endblock %}

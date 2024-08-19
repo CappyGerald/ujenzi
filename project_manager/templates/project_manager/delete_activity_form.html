@@ -1,0 +1,13 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}>Delete Acitivy{% endblock %}
+{% block content %}
+
+    <h1>Delete Activity</h1>
+    <p>Are you sure you want to delete?</p>
+    <form action="{% 'delete_activity' activity.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">confirm</button>
+        <a href="{% url 'project_manager:activity_view' %}">Cancel</a>
+    </form>
+{% endblock %}

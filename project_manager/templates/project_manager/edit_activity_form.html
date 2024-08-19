@@ -1,8 +1,8 @@
 {% extends 'project_manager/base.html' %}
-{% block title %}Add Personnel{% endblock %}
+{% block title %}Edit Activity{% endblock %}
 {% block content %}
-    <h1>Add Personnel</h1>
-    <form action="{% url 'project_manager:add_personnel' %}" method="post">
+    <h1>Edit Activity</h1>
+    <form action="{% url 'project_manager:edit_activity' activity.id %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>

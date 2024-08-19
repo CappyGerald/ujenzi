@@ -1,0 +1,11 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Delete Machinery{% endblock %}
+{% block content %}
+    <h1>Delete Machnery</h1>
+    <p>Are you sure you want to delete this machinery></p>
+    <form action="{% url 'delete_machinery' machinery.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+        <a href="{% url 'project_manager:machinery_view' %}">Cancel</a>
+    </form>
+{% endblock %}

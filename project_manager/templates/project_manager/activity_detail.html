@@ -1,0 +1,12 @@
+{ % extends 'project_manager/base.html % }
+{% block title %}{{ activity.name }}{% endblock %}
+{% block content %}
+    <h1>{{ activity.name }}</h1>
+    <p>{{ activity.project }}</p>
+    <p> {{ activity.description }}</p>
+    <p>{{ activity.start_date }}</p>
+    <p>{{ activity.end_date }}</p>
+    <p>{{ activity.cost }}</p>
+    <a href="{% url 'project_manager:edit_activity' activity.id %}">Edit Activity</a>
+    <a href="{% url 'delete_activity' activity.id %}">Delete Activity</a>
+{% endblock %}

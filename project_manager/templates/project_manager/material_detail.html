@@ -1,0 +1,11 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}{{ material.name }}{% endblock%}
+{% block content %}
+    <h1> name: {{ material.name }}</h1>
+    <p> project: {{ material.project }}</p>
+    <p> Quantity: {{ material.quantity }}</p>
+    <p> Unit: {{ material.quantity_units }}</p>
+    <p> Cost: {{ material.cost }}</p>
+    <a href="{% url 'project_manager:edit_material' material.id %}"> Edit</a>
+    <a href="{% url 'project_manager:delete_material' material.id %}">delete</a>
+{% endblock %}

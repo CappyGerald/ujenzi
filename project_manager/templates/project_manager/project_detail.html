@@ -1,0 +1,13 @@
+{% extends 'project_manager/base.html' %}
+{% block title %} {{ project.name }} {% endblock %}
+{% block content %}
+    <h1> project name: {{ project.name }}</h1>
+             <center><p>{{ project.description }}</p></center>
+            <p> Estimated budget: {{ project.budget }}</p>
+            <p> start date: {{ project.start_date }}</p>
+            <p>  End date :{{ project.end_date }}</p>
+            <p> {{ project.expected_revenue_unit }}</p>
+            <p> expected revenue: {{project.expected_revenue}} </p>
+            <a href="{% url 'project_manager:edit_project' project.id %}">Edit</a>
+            <a href="{% url 'project_manager:delete_project' project.id %}">Delete</a>      
+{% endblock %}

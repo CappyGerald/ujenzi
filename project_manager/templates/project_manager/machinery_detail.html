@@ -1,0 +1,12 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}{{ machinery.name }} {% endblock %}
+{% block content %}
+    <h1> name: {{ machinery.name }}</h1>
+    <p> project: {{ machinery.project }}</p>
+    <p> type: {{ machinery.type }}</p>
+    <p> cost: {{ machinery.cost}}</p>
+    <p> number: {{ machinery.num_of_machines }}</p>
+    <a href="{% url 'project_manager:edit_machinery' machinery.id %}">Edit</a>
+    <a href="{% url project_manager:delete_machinery machinery.id %}">Delete</a>
+
+{% endblock %}

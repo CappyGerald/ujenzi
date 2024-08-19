@@ -1,0 +1,11 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Delete Milestone{% endblock %}
+{% block content %}
+    <h1>delete milestone</h1>
+    <p>Are you sure you want to delete?</p>
+    <form action="{% url 'delete_milestone' milestone.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">delete</button>
+        <a href=" {% url 'project_manager:milestone_view' %}">Cancel</a>
+    </form>
+{% endblock %}

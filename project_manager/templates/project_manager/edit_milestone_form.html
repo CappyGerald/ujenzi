@@ -1,0 +1,10 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Edit Milestone{% endblock %}
+{% block content %}
+    <h1>Edit milestone</h1>
+    <form action="{% url 'project_manager:edit_milestone' milestone.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Edit</button>
+    </form>
+{% endblock % }
