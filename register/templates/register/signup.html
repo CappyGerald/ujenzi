@@ -1,0 +1,12 @@
+{% extends 'project_manager/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="form-container">
+        <h2>Signup</h2>
+        <form method="post" action="{% url 'register:signup' %}" class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success mt-2">Signup</button>
+        </form>
+    </div>
+{% endblock %}
