@@ -1,0 +1,14 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Add milestone{% endblock %}
+{% block content %}
+    <h1>Add milestone</h1>
+    <a href="{% url 'project_manager:add_milestone' %}">Add milestone</a>
+    <ul>
+        {% for milestone in milestones %}
+        <li>
+            <a href="{% url 'project_manager:milestone_detail' milestone.id %}">{{ milestone.name }}</a>
+        </li>
+        {% endfor %}
+        {% include 'project_manager/pagination.html' with page_obj='milestones'}
+    </ul>
+{% endblock %}

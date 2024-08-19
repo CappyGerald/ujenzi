@@ -1,0 +1,13 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Materials{% endblock %}
+{% block content %}
+    <h1>Materials</h1>
+    <a href="{% url 'project_manager:add_material' %}">Add material</a>
+    <ul>
+        {% for material in materials %}
+        <li>
+            <a  href="{% url 'project_manager:material_detail' material.id %}" >{{ material.name }}</a>     
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

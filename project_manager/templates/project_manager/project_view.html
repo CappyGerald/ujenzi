@@ -1,0 +1,17 @@
+{% extends 'project_manager/base.html' %}
+{% block title %} Projects{% endblock %}
+{% block content %}
+
+    <h1>Projects</h1>
+    <a href="{% url 'project_manager:add_project' %}">Add Project</a>
+    <ul>
+        {% for project in projects %}
+        <li>
+           <a href="{% url 'project_manager:detail' project.id %}">{{ project.name }}</a> 
+        </li>
+        {% endfor %}
+        {% include 'project_manager/pagination.html' with page_obj='projects'}
+    </ul>
+{% endblock %}
+
+

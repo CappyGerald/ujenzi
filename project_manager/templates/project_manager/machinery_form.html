@@ -1,0 +1,13 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Machineries{% endblock %}
+{% block content %}
+    <h1>Machineries</h1>
+    <a href="{% project_manager:url 'add_machinery' %}">Add Machine</a>
+    <ul>
+        {% for machinery in machineries %}
+        <li>
+            <a href="{% url 'project_manager:machinery_detail' machinery.id %}">{{ machinery.name }}</a>  
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
