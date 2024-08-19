@@ -1,23 +1,155 @@
-div {
-    border: 10px;
-    background-color: beige;
-    display: contents;
-    padding: 10 px;
+
+
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    color: #e0e0e0; /* Light text color for contrast */
+    background: linear-gradient(135deg, #1e1e1e, #2a2a2a); /* Dark gradient background */
+    line-height: 1.6;
+}
+
+/* Header styling */
+header {
+    background: #1f1f1f;
+    padding: 20px;
+    border-bottom: 2px solid #00bcd4; /* Futuristic accent color */
+    text-align: center;
+}
+
+header h1 {
+    color: #00bcd4;
+    font-size: 2.5rem;
+}
+
+/* Navigation styling */
+nav {
+    background: #333;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+nav a:hover {
+    background: #00bcd4;
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Main content styling */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+main section {
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background for a glass effect */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+main h2 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+main p {
+    color: #e0e0e0;
+}
+
+/* Footer styling */
+footer {
+    background: #1f1f1f;
+    padding: 20px;
+    text-align: center;
+    color: #e0e0e0;
+    border-top: 2px solid #00bcd4;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Ensure the nav container is a flexbox */
+.nav-container {
+    display: flex;
+    justify-content: center; /* Centers the nav items horizontally */
+    align-items: center; /* Centers the nav items vertically (optional) */
+    gap: 15px; /* Adds space between the items */
+    margin-top: 20px;
+}
+
+/* Style for each nav item */
+.nav-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white; /* Adjust the color as needed */
+    background-color: #007BFF; /* Adjust the background color as needed */
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for the nav items */
+.nav-item:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+/* Custom styling for form controls */
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #007BFF;
+    padding: 8px;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    background-color: #333;
 
 }
 
-.card {
-     letter-spacing: normal;
-     display: inline;
-     color: white;
-     border: 0cqb;
-     scrollbar-width: 5px;
+/* Custom styling for form labels */
+.form-group label {
+    font-weight: bold;
+    color: #e0e0e0;
 }
 
+/* Custom styling for form groups */
+.form-group {
+    margin-bottom: 15px;
+}
 
-.container {
-    background-attachment: fixed;
-    border: 0cqh;
-    padding-left: 10px;
-    text-size-adjust: 5px;
+/* Custom styling for submit buttons */
+.btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
+}
+
+/* Custom styling for the form container */
+.form-container {
+    max-width: 400px; /* Limit the maximum width of the form */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px; /* Add padding around the form */
+    background: rgba(0, 0, 0, 0.7); /* Background color for the form container */
+    border-radius: 8px; /* Rounded corners for the form container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional shadow for depth */
 }
