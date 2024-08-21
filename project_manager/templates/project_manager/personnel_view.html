@@ -4,7 +4,7 @@
 <h1>Personel</h1>
     <a href="{% url 'project_manager:add_personnel' %}">Add Personnel</a>
         <ul>
-            {% for personel in personel %}
+            {% for personel in page_obj %}
             <li>
             <a href="{% url 'project_manager:personnel_detail' personnel.id %}">{{ personnel.name }}</a> 
             </li>

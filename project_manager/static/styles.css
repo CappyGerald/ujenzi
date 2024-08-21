@@ -1,10 +1,60 @@
+.grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    
+    }
 
 
-/* Reset some default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.card btn {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    color: white;
+    padding:  20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card h3 {
+    margin-top:  0;
+    color: #00bcd4;
+}
+
+.card p {
+    color: lightslategrey;
+}
+
+.card {
+   background-color: #1e1e1e;
+   border-radius: 10px;
+   box-shadow: 0 4px  8px rgba(0, 0, 0, 0.5);
+   width: 300px;
+   padding: 20px;
+   color: #e0e0e0;
+   transition: transform 0.3s ease ;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card .btn:hover {
+    background-color: #0097a9;
+} 
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card{
+    margin-top: 0;
+    color: #00bcd4;
 }
 
 /* Body styling */
@@ -152,4 +202,13 @@ footer p {
     background: rgba(0, 0, 0, 0.7); /* Background color for the form container */
     border-radius: 8px; /* Rounded corners for the form container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional shadow for depth */
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.form-group {
+    margin-bottom: 12px;
 }

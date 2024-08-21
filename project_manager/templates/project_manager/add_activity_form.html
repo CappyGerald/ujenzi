@@ -1,10 +1,13 @@
 {% extends 'project_manager/base.html' %}
 {% block title %}Add activity{% endblock %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <h1>Add activity</h1>
-    <form action="{% url 'project_manager:add_activity' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+    <div class="form-group">
+        <h1>Add activity</h1>
+        <form action="{% url 'project_manager:add_activity' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
     </form>
+    </div>
 {% endblock %}

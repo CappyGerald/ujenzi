@@ -1,10 +1,13 @@
 {% extends 'project_manager/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}Add Milestone{% endblock %}
 {% block content %}
-    <h1>Add milestone</h1>
-    <form action="{% url 'project_manager:add_milestone' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submitt</button>
-    </form>
+    <div class="form-group">
+        <h1>Add milestone</h1>
+        <form action="{% url 'project_manager:add_milestone' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submitt</button>
+        </form>
+    </div> 
 {% endblock %}

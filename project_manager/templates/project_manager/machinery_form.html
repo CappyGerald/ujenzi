@@ -2,7 +2,7 @@
 {% block title %}Machineries{% endblock %}
 {% block content %}
     <h1>Machineries</h1>
-    <a href="{% project_manager:url 'add_machinery' %}">Add Machine</a>
+    <a href="{%  url 'project_manager:add_machinery' %}">Add Machine</a>
     <ul>
         {% for machinery in machineries %}
         <li>

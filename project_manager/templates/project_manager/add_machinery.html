@@ -1,10 +1,15 @@
 {% extends 'project_manager/base.html' %}
 {% block title %}Add Machinery{% endblock %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <h1>Add Machinery</h1>
-    <form action="{% url 'project_manager:add_machinery' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-group"> 
+        <h1>Add Machinery</h1>
+        <form action="{% url 'project_manager:add_machinery' %}" method="post">
+            {% csrf_token %}
+            {{ form| crispy}}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 {% endblock %}
+
+    
