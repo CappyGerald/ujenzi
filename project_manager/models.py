@@ -3,6 +3,13 @@ from django.db import models
 
 # Create your models here.
 
+class Status(models.TextChoices):
+    completed = 'comp', 'complete'
+    stalled = 'st', 'stalled'
+    in_progress = 'in_prog', 'in_progress'
+
+
+
 class Project(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
@@ -12,6 +19,7 @@ class Project(models.Model):
     end_date = models.DateField(blank=True, null=True)
     expected_revenue = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     revenue_unit = models.CharField(max_length=10, default='$')
+    status = models.CharField(max_length=100, choices=Status, default=Status.in_progress)
 
 
     def __str__(self):
