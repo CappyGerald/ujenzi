@@ -1,8 +1,35 @@
+
+.container {
+        width: 100px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+        margin: 0 auto;
+        padding: 10px;
+      
+    }
+    
+.project-content p {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 8x;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(7, 7, 7, 0.5);
+}
+
+.project-detail {
+    background-color: orange;
+}
+
+
 .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
         padding: 20px;
+        
     
     }
 
@@ -27,13 +54,13 @@
 }
 
 .card {
-   background-color: #1e1e1e;
+   background: rgba(0, 0, 0, 0.7);
    border-radius: 10px;
    box-shadow: 0 4px  8px rgba(0, 0, 0, 0.5);
-   width: 300px;
    padding: 20px;
-   color: #e0e0e0;
-   transition: transform 0.3s ease ;
+   text-align: center;
+   color: orange;
+   transition: transform 0.3s ease, box-shadow 0.3s ease ;
 }
 
 .card:hover {
@@ -43,14 +70,6 @@
 .card .btn:hover {
     background-color: #0097a9;
 } 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-around;
-    margin: 0 auto;
-    padding: 20px;
-}
 
 .card{
     margin-top: 0;
