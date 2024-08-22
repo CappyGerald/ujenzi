@@ -2,13 +2,16 @@
 {% block title %}Add milestone{% endblock %}
 {% block content %}
     <h1>Add milestone</h1>
-    <a href="{% url 'project_manager:add_milestone' %}">Add milestone</a>
-    <ul>
+    <div class="card">
+        <a href="{% url 'project_manager:add_milestone' %}">Add milestone</a>
+    </div>
+
+    <div class="grid">
         {% for milestone in milestones %}
-        <li>
-            <a href="{% url 'project_manager:milestone_detail' milestone.id %}">{{ milestone.name }}</a>
-        </li>
+        <div class="card">
+            <h2>{{ milestone.name }}</h2>
+        </div>
         {% endfor %}
         {% include 'project_manager/pagination.html' with page_obj='milestones'}
-    </ul>
+    </div>
 {% endblock %}

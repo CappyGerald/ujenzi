@@ -2,7 +2,8 @@
 {% block title %} Projects{% endblock %}
 {% block content %}
     <h1>Projects</h1>
-    </div>   
+    <div class="card">
+        <a href="{% url 'project_manager:add_project' %}"><center>Add Project</center></a>
     <div class  class="grid">
             {% for project in projects %}
                     <div class="card"> 
@@ -13,8 +14,7 @@
             {% endfor %}
             {% include 'project_manager/pagination.html' with page_obj='projects'}
     </div>
-    <div class="card">
-        <a href="{% url 'project_manager:add_project' %}"><center>Add Project</center></a>
+    
 {% endblock %}
 
 
