@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Activity, Employee,Project, Personnel, Machinery, Material, Milestone
-from .forms import  EmployeeForm, ProjectForm, MachineryForm, MaterialForm,\
-    PersonnelForm, ActivityForm, MilestoneForm
+from .models import Activity, Employee,Project, Machinery, Material, Milestone
+from .forms import  EmployeeForm, ProjectForm, MachineryForm, MaterialForm, ActivityForm, MilestoneForm
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -260,56 +259,6 @@ def delete_material(request, pk):
         return redirect('project_manager:material_view')
     return render(request, 'project_manager/delete_material.html', {'material': material, 'show_image': False})
 
-@login_required
-def personnel_view(request):
-    personnel = Personnel.objects.all().order_by('id')
-    paginator = Paginator(personnel, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        page_obj  = paginator.get_page(page_number)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
-    return render(request, 'project_manager/personnel_view.html', {'page_obj': page_obj, 'show_image': False})
-
-@login_required
-def personnel_detail(request, pk):
-    personnel = get_object_or_404(Personnel, pk=pk)
-    return render(request, 'project_manager/personnel_detail.html', {'personel': personnel, 'show_image': False})
-
-@login_required
-def add_personnel(request):
-    if request.method == 'POST':
-        form = PersonnelForm(request.POST)
-        if form.is_valid():
-            print('form is valid')
-            form.save()
-            return redirect('project_manager:personnel_view')
-        else:
-            print('form is invalid!')
-            print(form.errors)
-    else:
-        form = PersonnelForm()
-    return render(request, 'project_manager/add_personnel.html', {'form': form, 'show_iamge': False})
-
-@login_required
-def edit_personnel(request, pk):
-    personnel = get_object_or_404(Personnel, pk=pk)
-    if request.method == 'POST':
-        form = PersonnelForm(request.POST, instance=personnel)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:personnel_detail', pk=personnel.pk)
-    else:
-        form = PersonnelForm(instance=personnel)
-    return render(request, 'project_manager/edit_personnel_form.html', {'form': form, 'show_image': False})
-
-@login_required
-def delete_personnel(request, pk):
-    personnel = get_object_or_404(Personnel, pk=pk)
-    if request.method == 'POST':
-        personnel.delete()
-        return redirect('project_manager:personnel_view')
-    return render(request, 'project_manager/delete_personnel_form.html', {'personel': personnel, 'show_image': False})
 
 @login_required
 def milestone_view(request):
