@@ -1,0 +1,11 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Delete Employee{% endblock %}
+{% block content %}
+    <h1>Delete Project</h1>
+    <p>Are you sure you want to delete {{ employee.first_name }}?</p>
+    <form method="post" action="{% url 'delete_employee' employee.id %}">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+        <a href="{% url 'project_anager:employee_view' %}">Cancel</a>
+    </form>
+{% endblock %}

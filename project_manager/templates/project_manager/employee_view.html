@@ -1,0 +1,18 @@
+{% extends 'project_manager/base.html' %}
+{% block title %} Projects{% endblock %}
+{% block content %}
+    <h1>Employees</h1>
+    <div class="card">
+        <a href="{% url 'project_manager:add_project' %}"><center>Add Project</center></a>
+    <div class  class="grid">
+            {% for employee in employees %}
+                    <div class="card"> 
+                        <h3>{{ employee.name }}</h3>
+                        <p>{{ employee.join_date }}</p>                
+                        <a href="{% url 'project_manager:employee_detail' employee.id %}" class="btn btn-primary">View Details</a>                      
+                    </div>
+            {% endfor %}
+            {% include 'project_manager/pagination.html' with page_obj='employee '}
+    </div>
+    
+{% endblock %}

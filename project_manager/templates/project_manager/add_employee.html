@@ -1,0 +1,12 @@
+{% extends 'project_manager/base.html' %}
+{% block title %}Add Employee{% endblock %}
+{% block content %}
+    <div class="form-group">
+        <h1>Add Employee</h1>
+        <form  method="post" action="{% url 'project_manager:add_employee' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit">Submit</button>
+        </form> 
+    </div>   
+{% endblock %}

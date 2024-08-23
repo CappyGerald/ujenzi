@@ -1,0 +1,22 @@
+{% extends 'project_manager/base.html' %}
+{% block title %} {{ employee.first_name }} {% endblock %}
+{% block content %}
+<div class="project-detail">
+    <h2>{{ Employee.first_name }}</h1>
+        <div class="project-content">
+            <p>{{ project }}</p>
+            <p> First_name {{ employee.first_namr }}</p>
+            <p> Last Name : {{ employee.last_name }}</p>
+            <p> Date joined  :{{ employee.join_date }}</p>
+            <p>Contract End Date {{ employee.end_date }}</p>
+            <p> email: {{ employee.email}}</p>
+            <p> Department: {{ employee.department}} </p>
+            <p>Position: {{ employee.position }}</p>
+        </div>
+              <a href="{% url 'project_manager:edit_employee' employee.id %}" class="btn btn-primary">Edit</a>
+            <form action="{% url 'project_manager:delete_employee' employee.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>          
+</div>       
+{% endblock %}
