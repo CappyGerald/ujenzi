@@ -1,308 +1,512 @@
+from typing import Any
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Activity, Employee,Project, Machinery, Material, Milestone
 from .forms import  EmployeeForm, ProjectForm, MachineryForm, MaterialForm, ActivityForm, MilestoneForm
 from django.core.paginator import Paginator, EmptyPage
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.views.generic import ListView, TemplateView, DateDetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
-def index(request):
-    return render(request, 'project_manager/base.html', {'show_image': True})
-@login_required
-def dashboard(request):
-    return render(request, 'project_manager/dashboard.html', {'current_year': datetime.now().year, 'show_image': False})
+class IndexView(TemplateView):
+    template_name = 'project_manager/base.html'
 
-@login_required
-def activity_view(request):
-    activities = Activity.objects.all().order_by('id')
-    paginator = Paginator(activities, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        activities_list = paginator.page(page_number)
-    except EmptyPage:
-        activities_list = paginator.page(paginator.num_pages)
-   
-    return render(request, 'project_manager/activity_view.html', {'activities': activities, 'show_image': False})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = True
+        return context
 
-@login_required
-def activity_detail(request, pk):
-    activity = get_object_or_404(Activity, pk=pk)
-    return render(request, 'project_manager/activity_detail.html', {'activity': activity, 'show_image': False})
+class DashboardView(TemplateView):
+    template_name = 'project_manager/dashboard.html'
 
-@login_required
-def add_activity(request):
-    if request.method == 'POST':
-        form = ActivityForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:activity_view')
-    else:
-        form = ActivityForm()
-    return render(request, 'project_manager/add_activity_form.html', {'form': form, 'show_image': False})
-
-@login_required
-def edit_activity(request, pk):
-    activity = get_object_or_404(Activity, pk=pk)
-    if request.method == 'POST':
-        form = ActivityForm(request.POST, instance=activity)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:activity_detail', pk=activity.pk)
-    else:
-        form = ActivityForm(instance=activity)
-    return render(request, 'project_manager/edit_activity_form.html', {'form': form, 'show_image': False})
-
-@login_required
-def delete_activity(request, pk):
-    activity = get_object_or_404(Activity, pk=pk)
-    if request.method == 'POST':
-        activity.delete()
-        return redirect('project_manager:activity_view')
-    return render(request, 'delete_activity_form.html', {'activity': activity, 'show_image': False})
-
-@login_required
-def employee_view(request):
-    employees = Employee.objects.all().order_by('id')
-    paginator = Paginator(employees, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        employee_list = paginator.page(page_number)
-    except EmptyPage:
-        employee_list = paginator.page(paginator.num_pages)
-   
-    return render(request, 'project_manager/employee_view.html', {'employees': employees, 'show_image': False})
-
-@login_required
-def employee_detail(request, pk):
-    employee = get_object_or_404(Employee, pk=pk)
-    return render(request, 'project_manager/employee_detail.html', {'employee': employee, 'show_image': False})
-
-@login_required
-def add_employee(request):
-    if request.method == 'POST':
-        form = EmployeeForm()
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:employee_view')
-    else:
-        form = EmployeeForm()
-    return render(request, 'project_manager/add_employee.html', {'form':form, 'show_image': False})
-
-@login_required
-def edit_employee(request, pk):
-    employee = get_object_or_404(Employee, pk=pk)
-    if request.method == 'POST':
-        form = EmployeeForm(request.POST, instance=employee)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:employee_detail')
-    else:
-        form = EmployeeForm(instance=employee)
-    return render(request, 'project_manager/edit_employee.html', {'form': form, 'show_image': False})
-
-@login_required
-def delete_employee(request, pk):
-    employee = get_object_or_404(Employee, pk=pk)
-    if request.method == 'POST':
-        employee.delete()
-        return redirect('project_manager:employee_view')
-    return render(request, 'project_manager/delete_employee.html', {'employee': employee, 'show_image': False})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_year'] = datetime.now().year
+        context['show_image'] = False
+        return context
     
-@login_required
-def project_view(request):
-    projects = Project.objects.all().order_by('id')
-    paginator = Paginator(projects, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        project_list = paginator.page(page_number)
-    except EmptyPage:
-        project_list = paginator.page(paginator.num_pages)
-    return render(request,
-                  'project_manager/project_view.html',
-                  {'projects': projects, 'show_image':False})
-@login_required
-def project_detail(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    return render(request, 'project_manager/project_detail.html', {'project': project})
-@login_required
-def add_project(request):
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:project_view')
-    else:
-        form = ProjectForm()
-    print(form.fields)
-    return render(request, 'project_manager/add_project_form.html', {'form':form, 'show_image': False})
+class ActivityListiew(ListView):
+    model = Activity
+    template_name = 'project_manager/activity_view.html'
+    context_objct_name = 'activities'
+    paginate_by = 3
+    ordering = ['id']
 
-@login_required
-def delete_project(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == 'POST':
-        project.delete()
-        return redirect('project_manager:project_view')
-    return render(request, 'project_manager/delete_project_form.html', {'project': project, 'show_image': False})
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = False
+        return context
+    
+class ActivityDetailView(DateDetailView):
+    model = Activity
+    template_name = 'project_manager/activity_detail.html'
+    context_object_name = 'activity'
 
-@login_required
-def edit_project(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project) 
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:project_detail', pk=project.pk)
-    else:
-        form = ProjectForm(instance=project)
-    return render(request, 'project_manager/edit_project_form.html', {'form': form, 'project': project,' show_image': False })
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ActivityCreateView(CreateView):
+    model = Activity
+    form_class = ActivityForm
+    template_name = 'project_manager/add_activity.html'
+    success_url = reverse_lazy('project_manager:activity_view')
 
-@login_required
-def machinery_view(request):
-    machineries = Machinery.objects.all().order_by('id')
-    paginator = Paginator(machineries, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        machinery_list = paginator.page(page_number)
-    except EmptyPage:
-        machinery_list = paginator.page(paginator.num_pages)
-    return render(request,
-                  'project_manager/machinery_form.html',
-                  {'machineries': machineries})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = True
+        return context
+    
+class DeleteActivityView(DeleteView):
+    model = Activity
+    template_name = 'project_manager/delete_activity.html'
+    success_url = reverse_lazy('project_manager:activity_view')
 
-@login_required
-def machinery_detail(request, pk):
-    machinery = get_object_or_404(Machinery, pk=pk)
-    return render(request,  'project_manager/machinery_detail.html', {'machinery': machinery,'show_image': False })
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
 
-@login_required
-def add_machinery(request):
-    if request.method == 'POST':
-        form = MachineryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:machinery_view')
-    else:
-        form = MachineryForm()
-    return render(request,
-                  'project_manager/add_machinery.html',
-                  {'form': form, 'show_image': False})
+    
+class ActivityUpdateView(UpdateView):
+    model = Activity
+    form_class = ActivityForm
+    template_name = 'project_manager/edit_activity.html'
 
-@login_required
-def edit_machinery(request, pk):
-    machinery = get_object_or_404(Machinery,
-                                pk=pk)
-    if request.method == 'POST':
-        form = MachineryForm(request.POST, instance=machinery)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:machinery_detail', pk=machinery.pk)
-    else:
-        form = MachineryForm(instance=machinery)
-    return render(request,
-                  'project_manager/edit_machinery.html',
-                  {'form':form, 'show_image': False})
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:activity_detail', kwargs={'pk':self.object.pk})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class EmployeeListiew(ListView):
+    model = Employee
+    template_name = 'project_manager/employee_view.html'
+    context_objct_name = 'employees'
+    paginate_by = 3
+    ordering = ['id']
 
-@login_required
-def delete_machinery(request, pk):
-    machinery = get_object_or_404(Machinery,
-                                pk=pk)
-    if request.method == 'POST':
-        machinery.delete()
-        return redirect('project_manager:machinery_view')
-    return render(request, 'project_manager/delete_machinery.html', {'machinery': machinery, 'show_image': False})
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+    
+class EmployeeDetailView(DateDetailView):
+    model = Employee
+    template_name = 'project_manager/employee_detail.html'
+    context_object_name = 'employee'
 
-@login_required
-def material_view(request):
-    materials = Material.objects.all().order_by('id')
-    paginator = Paginator(materials, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        material_list = paginator.page(page_number)
-    except EmptyPage:
-        material_list = paginator.page(paginator.num_pages)
-    return render (request, 'project_manager/material_view.html', {'materials': materials, 'show_image': False})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class EmployeeCreateView(CreateView):
+    model = Employee
+    form_class = EmployeeForm
+    template_name = 'project_manager/add_employee.html'
+    success_url = reverse_lazy('project_manager:employee_view')
 
-@login_required
-def material_detail(request, pk):
-    material = get_object_or_404(Material, pk=pk)
-    return render(request, 'project_manager/material_detail.html',
-                  {'material': material, 'show_image': False})
-@login_required
-def add_material(request):
-    if request.method == 'POST':
-        form = MaterialForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:material_view')
-    else:
-        form = MaterialForm()
-    return render(request, 'project_manager/add_material.html', {'form': form, 'show_image': False})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class EmployeeUpdateView(UpdateView):
+    model = EmployeeForm
+    form_class = EmployeeForm
+    template_name = 'project_manager/edit_employee.html'
 
-@login_required
-def edit_material(request, pk):
-    material = get_object_or_404(Material, pk=pk)
-    if request.method == 'POST':
-        form = MaterialForm(request.POST, instance=material)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:material_detail', pk=material.pk)
-    else:
-        
-        form = MaterialForm(instance=material)
-    return render(request, 'project_manager/edit_material_form.html', {'form': form, 'show_image': False})
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:employee_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteEmployeeView(DeleteView): 
+    model = Employee
+    template_name = 'project_manager/delete_employee.html'
+    success_url = reverse_lazy('project_manager:employee_view')
 
-@login_required
-def delete_material(request, pk):
-    material = get_object_or_404(Material, pk=pk)
-    if request.method == 'POST':
-        material.delete()
-        return redirect('project_manager:material_view')
-    return render(request, 'project_manager/delete_material.html', {'material': material, 'show_image': False})
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
 
+class MilestoneListiew(ListView):
+    model = Milestone
+    template_name = 'project_manager/milestone_view.html'
+    context_objct_name = 'milestones'
+    paginate_by = 3
+    ordering = ['id']
 
-@login_required
-def milestone_view(request):
-    milestones =  Milestone.objects.all()
-    paginator = Paginator(milestones, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        milestone_list = paginator.page(page_number)
-    except EmptyPage:
-        milestone_list = paginator.page(paginator.num_pages)
-    return render(request, 'project_manager/milestone_view.html', {'milestones':milestones, 'show_image': False})
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
 
-@login_required
-def milestone_detail(request, pk):
-    milestone = get_object_or_404(Milestone, pk=pk)
-    return render(request, 'project_manager/milestone_detail.html', {'milestone': milestone, 'show_image': False})
+   
+class MilestoneCreateView(CreateView):
+    model = Milestone
+    form_class = MilestoneForm
+    template_name = 'project_manager/add_milestone_form.html'
+    success_url = reverse_lazy('project_manager:milestone_view')
 
-@login_required
-def add_milestone(request):
-    if request.method == 'POST':
-        form = MilestoneForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:milestone_view')
-    else:
-        form = MilestoneForm()
-    return render(request, 'project_manager/add_milestone_form.html', {'form': form, 'show_image': False})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class MilestoneUpdateView(UpdateView):
+    model = Milestone
+    form_class = EmployeeForm
+    template_name = 'project_manager/edit_milesone_form.html'
 
-@login_required
-def edit_milestone(request, pk):
-    milestone = get_object_or_404(Milestone, pk=pk)
-    if request.method == 'POST':
-        form = MilestoneForm(request.POST, instance=milestone)
-        if form.is_valid():
-            form.save()
-            return redirect('project_manager:milestone_detail', pk=milestone.pk)
-    else:
-        form = MilestoneForm(instance=milestone)
-    return render(request, 'project_manager/edit_milestone_form.html', {'form': form, 'show_image': False})
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:milestone_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteMilestoneView(DeleteView): 
+    model = Milestone
+    template_name = 'project_manager/delete_milestone_form.html'
+    success_url = reverse_lazy('project_manager:milestone_view')
 
-@login_required
-def delete_milestone(request, pk):
-    milestone = get_object_or_404(Milestone, pk=pk)
-    if request.method == 'POST':
-        milestone.delete()
-        redirect('project_manager:milestone_view')
-    return render(request, 'project_manager/delete_milestone_form.html', {'milestone': milestone, 'show_image': False})
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+
+class MachineryListiew(ListView):
+    model = Machinery
+    template_name = 'project_manager/machinery_view.html'
+    context_objct_name = 'machineries'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class MachineryCreateView(CreateView):
+    model = Machinery
+    form_class = MilestoneForm
+    template_name = 'project_manager/add_machinery.html'
+    success_url = reverse_lazy('project_manager:machinery_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class MachineryUpdateView(UpdateView):
+    model = Machinery
+    form_class = MachineryForm
+    template_name = 'project_manager/edit_machiner.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteMachineryView(DeleteView): 
+    model = Machinery
+    template_name = 'project_manager/delete_machinery.html'
+    success_url = reverse_lazy('project_manager:machinery_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+
+class ProjectListiew(ListView):
+    model = Project
+    template_name = 'project_manager/project_view.html'
+    context_objct_name = 'projects'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/add_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/edit_project.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteProjectView(DeleteView): 
+    model = Project
+    template_name = 'project_manager/delete_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+class ProjectListiew(ListView):
+    model = Project
+    template_name = 'project_manager/project_view.html'
+    context_objct_name = 'projects'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/add_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/edit_project.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteProjectView(DeleteView): 
+    model = Project
+    template_name = 'project_manager/delete_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+class ProjectListiew(ListView):
+    model = Project
+    template_name = 'project_manager/project_view.html'
+    context_objct_name = 'projects'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/add_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/edit_project.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteProjectView(DeleteView): 
+    model = Project
+    template_name = 'project_manager/delete_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+class ProjectListiew(ListView):
+    model = Project
+    template_name = 'project_manager/project_view.html'
+    context_objct_name = 'projects'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/add_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/edit_project.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteProjectView(DeleteView): 
+    model = Project
+    template_name = 'project_manager/delete_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+
+class ProjectListiew(ListView):
+    model = Project
+    template_name = 'project_manager/project_view.html'
+    context_objct_name = 'projects'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/add_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project_manager/edit_project.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteProjectView(DeleteView): 
+    model = Project
+    template_name = 'project_manager/delete_project.html'
+    success_url = reverse_lazy('project_manager:project_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+
+class ProjectListiew(ListView):
+    model = Material
+    template_name = 'project_manager/material_view.html'
+    context_objct_name = 'materials'
+    paginate_by = 3
+    ordering = ['id']
+
+    def get_context_data(self, **kwarg):
+        context = super().get_context_data(**kwarg)
+        context['show_image'] = True
+        return context
+
+   
+class MaterialCreateView(CreateView):
+    model = Material
+    form_class = MaterialForm
+    template_name = 'project_manager/add_material.html'
+    success_url = reverse_lazy('project_manager:material_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class MaterialUpdateView(UpdateView):
+    model = Material
+    form_class = MaterialForm
+    template_name = 'project_manager/edit_material.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('project_manager:machinery_detail', kwargs={'pk':self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
+    
+class DeleteMaterialtView(DeleteView): 
+    model = Material
+    template_name = 'project_manager/delete_material.html'
+    success_url = reverse_lazy('project_manager:material_view')
+
+def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_image'] = False
+        return context
