@@ -8,12 +8,30 @@
 
     <nav>
         <center>
-            <a href="{% url 'project_manager:project_view' %}">Projects</a>
-            <a href="{% url 'project_manager:machinery_view' %}">Machines & Equipment</a>
-            <a href="{% url 'project_manager:material_view' %}">Materials</a>
-            <a href="{% url 'project_manager:milestone_view' %}">Milestones</a>
-            <a href="{% url 'project_manager:activity_view' %}">Activities</a>
-            <a href="{% url 'register:logout' %}">Logout</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <a href="{% url 'project_manager:project_view' %}">Projects</a>
+                        </th>
+                        <th scope="col">
+                            <a href="{% url 'project_manager:machinery_view' %}">Machines & Equipment</a>
+                        </th>
+                       <th scope="col">
+                        <a href="{% url 'project_manager:material_view' %}">Materials</a>
+                       </th>
+                        <th scope="col">
+                            <a href="{% url 'project_manager:milestone_view' %}">Milestones</a>
+                        </th>
+                        <th scope="col">
+                            <a href="{% url 'project_manager:activity_view' %}">Activities</a>
+                        </th>
+                        <th scope="col">
+                            <a href="{% url 'register:logout' %}">Logout</a>
+                        </th>
+                     </tr>
+                </thead>
+            </table>
         </center>
     </nav>
 {% endblock %}
