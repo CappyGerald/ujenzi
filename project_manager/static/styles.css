@@ -1,4 +1,41 @@
+.table {
+    background-color: magenta;
+    color: #e0e0e0;
+    text-decoration: overline;
+    width: 80%;
+    display: block;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
 
+.table thead {
+    background-color: light grey;
+}
+
+
+.table th {
+    padding: 15%;
+    text-align: center;
+    font-weight: bold;
+    border-bottom:  2px solid #ccc;
+}
+
+.table a {
+    text-decoration: none;
+    color: lightcyan;
+    display: block;
+    padding: 10px 15px;
+}
+
+.table a:hover {
+    background-color: #e9e9e9;
+    color: #0056b3;
+    border-radius: 4px;
+}
+
+.table tr:hover {
+    background-color: lightblue;
+}
 .container {
         width: 100px;
         display: flex;
@@ -37,7 +74,7 @@
 .card btn {
     background: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
-    color: white;
+    color: palevioletred;
     padding:  20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -230,4 +267,5 @@ footer p {
 
 .form-group {
     margin-bottom: 12px;
+    background-color: maroon;
 }
